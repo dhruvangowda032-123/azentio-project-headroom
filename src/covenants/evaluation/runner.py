@@ -7,7 +7,7 @@ from statistics import mean
 
 import yaml
 
-from covenants.extraction import extract
+from covenants.services.extraction import extract
 from covenants.providers import LLMProvider, ReplayProvider, get_provider
 
 FIELDS = ("operator", "threshold", "unit", "effective_from", "effective_to")

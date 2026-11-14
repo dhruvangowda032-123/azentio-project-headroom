@@ -7,10 +7,10 @@ from functools import lru_cache
 from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.responses import JSONResponse
 
-from covenants.compliance import check
-from covenants.config import Settings
-from covenants.extraction import extract
-from covenants.middleware import BodyLimitMiddleware
+from covenants.services.compliance import check
+from covenants.core.config import Settings
+from covenants.services.extraction import extract
+from covenants.core.middleware import BodyLimitMiddleware
 from covenants.providers import LLMProvider, ProviderError, get_provider
 from covenants.schemas import AgreementInput, CheckInput
 from covenants.storage import Store

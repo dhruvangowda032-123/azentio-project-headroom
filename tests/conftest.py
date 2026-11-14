@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from covenants.extraction import extract
+from covenants.services.extraction import extract
 from covenants.providers import FakeProvider
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -58,7 +58,7 @@ def test_retry_is_bounded(monkeypatch):
     def handler(request):
         calls.append(1)
         return httpx.Response(429, headers={"retry-after": "1000"})
-    monkeypatch.setattr("covenants.providers.time.sleep", lambda value: None)
+    monkeypatch.setattr("covenants.providers.groq.time.sleep", lambda value: None)
     provider = GroqProvider("test", api_key="private", transport=httpx.MockTransport(handler))
     with pytest.raises(ProviderError, match="429"):
         provider.generate("{}", ExtractionDraft)

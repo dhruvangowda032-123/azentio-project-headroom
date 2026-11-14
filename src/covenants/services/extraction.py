@@ -5,10 +5,10 @@ import json
 import time
 from datetime import timedelta
 
-from covenants.parser import parse_clauses
+from covenants.services.parser import parse_clauses
 from covenants.providers import LLMProvider, ProviderError
 from covenants.schemas import Covenant, ExtractionDraft, ExtractionMeta, ExtractionResult, Usage
-from covenants.verification import verify
+from covenants.services.verification import verify
 
 PROMPT_VERSION = "headroom-extract-v1"
 INSTRUCTIONS = (

@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 from covenants.evaluation import compare as run_comparison
 from covenants.evaluation import evaluate, write_eval
-from covenants.extraction import extract as extract_agreement
+from covenants.services.extraction import extract as extract_agreement
 from covenants.providers import ProviderError, get_provider
 
 app = typer.Typer(no_args_is_help=True, pretty_exceptions_enable=False)

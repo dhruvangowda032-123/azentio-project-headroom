@@ -42,7 +42,19 @@ FastAPI routes / Typer CLI
 LLMProvider: FakeProvider | RulesProvider | optional GroqProvider | ReplayProvider
 ```
 
-`src/covenants/` separates schemas, parsing, providers, verification, extraction, compliance, evaluation, storage, API, CLI, and settings. API and CLI share the extraction service. Compliance has no provider dependency. HTTPX calls Groq's OpenAI-compatible endpoint directly; an agent framework, vector database, external DB, and broker are unnecessary.
+```text
+src/covenants/
+├── api/main.py                 # FastAPI application factory and routes
+├── services/                  # Extraction, verification, compliance, clause parsing
+├── providers/                 # Interface, fake/rules, Groq, replay, factory
+├── evaluation/runner.py        # Metrics, evaluation, comparison reports
+├── schemas/models.py          # Pydantic data contracts
+├── storage/repository.py       # SQLite persistence and audit log
+├── core/                      # Configuration and request-size middleware
+└── cli.py                     # Command-line entry point
+```
+
+API and CLI share the extraction service. Compliance has no provider dependency. Provider and persistence classes encapsulate state; parsing, verification, and calculations use focused functions. Package exports preserve commands such as `uvicorn covenants.api:app`. HTTPX calls Groq's OpenAI-compatible endpoint directly; an agent framework, vector database, external DB, and broker are unnecessary.
 
 ## Extraction design (under one page)
 

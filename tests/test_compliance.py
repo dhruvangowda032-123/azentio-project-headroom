@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from covenants.compliance import check
-from covenants.extraction import extract
+from covenants.services.compliance import check
+from covenants.services.extraction import extract
 from covenants.providers import FakeProvider
 from covenants.schemas import CheckInput
 from covenants.storage import Store

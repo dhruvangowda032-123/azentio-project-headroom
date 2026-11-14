@@ -5,11 +5,11 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from covenants.extraction import extract
-from covenants.parser import parse_clauses
+from covenants.services.extraction import extract
+from covenants.services.parser import parse_clauses
 from covenants.providers import FakeProvider, ProviderError
 from covenants.schemas import Covenant, CovenantDraft, ExtractionDraft
-from covenants.verification import normalize, verify
+from covenants.services.verification import normalize, verify
 
 
 def test_parser_offsets_stability_and_markdown(text):

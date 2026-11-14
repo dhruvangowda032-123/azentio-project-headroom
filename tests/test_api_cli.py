@@ -7,10 +7,10 @@ from typer.testing import CliRunner
 
 from covenants.api import create_app
 from covenants.cli import app
-from covenants.config import Settings
+from covenants.core.config import Settings
 from covenants.providers import FakeProvider, ProviderError
 from covenants.schemas import ExtractionResult
-from covenants.verification import normalize
+from covenants.services.verification import normalize
 
 ROOT = Path(__file__).resolve().parents[1]
 

@@ -36,3 +36,7 @@ Initial implementation remained local at the user's request. The candidate later
 
 The candidate should independently review this file, the generated corpus/labels, and every module before interview or submission; an AI-authored test run is not a claim of candidate review.
 
+## Package organization refactor
+
+At the candidate's request, a small local `refactor/package-structure` branch moves the tested modules into api, services, providers, evaluation, schemas, storage, and core packages. Provider classes are separated into interface/fake/Groq/replay/factory modules. Application behavior and data contracts are preserved; imports and documentation are updated. The API/CLI entry points remain unchanged. Tests and exact replay verification are rerun before commit. No code is pushed or PR merged by the assistant.
+
