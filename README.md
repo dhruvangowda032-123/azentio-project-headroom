@@ -56,6 +56,81 @@ src/covenants/
 
 API and CLI share the extraction service. Compliance has no provider dependency. Provider and persistence classes encapsulate state; parsing, verification, and calculations use focused functions. Package exports preserve commands such as `uvicorn covenants.api:app`. HTTPX calls Groq's OpenAI-compatible endpoint directly; an agent framework, vector database, external DB, and broker are unnecessary.
 
+## Folder guide
+
+| Folder | What it contains |
+|---|---|
+| `src/covenants/api/` | API endpoints: receive requests and return results |
+| `src/covenants/services/` | Agreement parsing, extraction, evidence checks, and financial calculations |
+| `src/covenants/providers/` | Common provider interface, Fake/Rules, Groq, Replay, and provider selection |
+| `src/covenants/evaluation/` | Compare extractions with expected answers and produce metrics |
+| `src/covenants/schemas/` | Pydantic definitions that validate inputs and outputs |
+| `src/covenants/storage/` | Save agreements and append-only audit records in SQLite |
+| `src/covenants/core/` | Application settings and request-size protection |
+| `data/agreements/` | Six fictional loan agreements |
+| `data/golden/` | Expected answers for evaluation; providers must never read these |
+| `data/financials/` | Quarterly figures for two fictional borrowers |
+| `fixtures/recordings/` | Saved provider responses for offline replay |
+| `tests/` | Automated unit and integration tests |
+| `scripts/` | Generate data, check replay, and exercise the running API |
+| `reports/` | Extraction samples, evaluation metrics, and end-to-end results |
+| `config/` | Model pricing used for cost estimates |
+| `runtime/` | Local SQLite databases created when running the application |
+| `.github/workflows/` | Automated GitHub checks |
+| `.venv/` | Local Python environment and installed dependencies |
+
+`cli.py` provides terminal commands. `__init__.py` identifies Python packages and exports their public interfaces. `__pycache__/` and `*.egg-info/` are generated automatically and excluded from Git.
+
+## Run in PyCharm and inspect the final output
+
+### 1. Start the API in debug mode
+
+Open **Run > Edit Configurations > + > Python** and use:
+
+| Setting | Value |
+|---|---|
+| Interpreter | This project's `.venv/bin/python` |
+| Target type | Module |
+| Module name | `uvicorn` |
+| Parameters | `covenants.api:app --host 127.0.0.1 --port 8000` |
+| Working directory | The project root, containing `pyproject.toml` |
+| Environment variables | `PYTHONUNBUFFERED=1;HEADROOM_PROVIDER=fake;HEADROOM_DATA_DIR=runtime/debug` |
+
+Click **Apply > OK**, then **Debug**. Open <http://127.0.0.1:8000/docs> to view and call endpoints. Do not add `--reload` for this simple debug setup. FakeProvider runs the full workflow without an API key; it is not a real AI model.
+
+### 2. Exercise the complete workflow
+
+With the API running, open an activated PyCharm terminal at the project root:
+
+```sh
+python scripts/smoke_http.py
+```
+
+This sends all six agreements, retrieves and checks their extracted citations, submits all eight quarterly financial inputs, and checks the expected results. It also checks missing inputs, an unknown agreement, and an invalid agreement. A successful run prints:
+
+```text
+HTTP smoke passed: 6 agreements, 39 covenants, 8 quarterly checks; report: ...
+```
+
+Disable breakpoints for this automatic run: pausing a request longer than the script's 60-second timeout will interrupt it. To step through the code, instead send individual requests from `/docs` with breakpoints in `api/main.py`, `services/extraction.py`, `services/verification.py`, or `services/compliance.py`. Repeated identical agreement uploads reuse stored results. To trace extraction again, use a new data directory such as `runtime/debug2` and restart; no database deletion is necessary.
+
+The two business flows are:
+
+1. Agreement text -> numbered clauses -> provider extracts conditions -> Python verifies quotes and limits -> save records.
+2. Quarterly financial figures -> select the condition valid for that quarter -> Python calculates -> return status and save an audit record.
+
+### 3. Read the results
+
+Open [reports/http_smoke.json](reports/http_smoke.json):
+
+- `quarterly_checks` lists the eight borrower/quarter results.
+- `breach_example.request` contains the submitted quarterly figures.
+- `breach_example.response.results` contains each calculated value, applicable limit, status, headroom, clause ID, and quote.
+
+The seeded example must show **loan_01, 2026-09-30: leverage 4.5 exceeds the maximum 3.5, so BREACH**, supported by clause `22.1`. Missing required figures return `NEEDS_REVIEW` rather than a pass. The SQLite database is at `runtime/debug/headroom.sqlite3` for the configuration above. Every compliance call appends an audit entry; repeated smoke runs add further entries.
+
+For extraction accuracy, read [reports/comparison.md](reports/comparison.md). For a complete extraction example, read [reports/sample_extraction.json](reports/sample_extraction.json). For the recorded test/container results, read [reports/validation.json](reports/validation.json). Smoke runs overwrite their HTTP report but do not regenerate the separate extraction sample or evaluation reports.
+
 ## Extraction design (under one page)
 
 The parser recognizes headings such as `22.2 Leverage` (including Markdown), rejects duplicate IDs, and preserves original text with start/end character offsets. A SHA-256 prefix of the original input identifies an agreement. All clauses, including definitions and amendments, are included in one batched request for these small documents; keyword filtering is avoided to protect recall and cross-reference context.
