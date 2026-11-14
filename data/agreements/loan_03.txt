@@ -1,0 +1,38 @@
+# FICTIONAL loan_03: Example Borrower 3 Ltd
+Synthetic training document. No real borrower. All monetary values and financial inputs are INR.
+Financial ratios use quarter-end net debt and LTM EBITDA/interest expense; DSCR uses the supplied cash available for debt service and debt service for the same reporting period. Capex is quarterly.
+
+22.1 Leverage
+Test frequency: quarterly, at quarter end.
+From 2026-01-01 through 2026-12-31, the Borrower shall ensure Net Debt / LTM EBITDA shall not exceed 4.0 ratio.
+
+22.2 Interest cover
+Test frequency: quarterly, at quarter end.
+From 2026-01-01 through 2026-12-31, the Borrower shall ensure LTM EBITDA / interest expense shall not be less than 3.0 ratio.
+
+22.3 Debt service coverage
+Test frequency: quarterly, at quarter end.
+From 2026-01-01 through 2026-12-31, the Borrower shall ensure cash available for debt service / debt service shall not be less than 1.2 ratio.
+
+22.4 Minimum net worth
+Test frequency: quarterly, at quarter end.
+From 2026-01-01 through 2026-12-31, the Borrower shall ensure tangible net worth shall not be less than 50000000 currency.
+
+22.5 Current ratio
+Test frequency: quarterly, at quarter end.
+From 2026-01-01 through 2026-12-31, the Borrower shall ensure current assets / current liabilities shall not be less than 1.5 ratio.
+
+22.6 Capital expenditure
+Test frequency: quarterly, at quarter end.
+From 2026-01-01 through 2026-12-31, the Borrower shall ensure quarterly capex shall not exceed 20000000 currency.
+
+23.1 Amendment to leverage
+This amendment replaces clause 22.1 from 2026-07-01.
+Test frequency: quarterly, at quarter end.
+From 2026-07-01 through 2026-12-31, the Borrower shall ensure Net Debt / LTM EBITDA shall not exceed 3.0 ratio.
+
+30.1 Interest margin
+The applicable interest margin is 2.0 percent per annum.
+
+30.2 Commitment fee
+The commitment fee is 0.5 percent on the undrawn amount.

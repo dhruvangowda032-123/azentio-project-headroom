@@ -1,0 +1,20 @@
+# USD per million tokens. Keep source/date with any production price update.
+models:
+  synthetic-rules-v1:
+    input_per_million: 0
+    output_per_million: 0
+    note: "Deterministic fake, no model tokens; excludes compute/hosting costs."
+  simple-regex-v1:
+    input_per_million: 0
+    output_per_million: 0
+    note: "Regex baseline, no model tokens; excludes compute/hosting costs."
+  openai/gpt-oss-20b:
+    input_per_million: 0.075
+    output_per_million: 0.30
+    note: "Groq published paid token rates, checked 2026-11-14 at https://console.groq.com/docs/models; free allowance spending is separate."
+  openai/gpt-oss-120b:
+    input_per_million: 0.15
+    output_per_million: 0.60
+    note: "Groq published paid token rates, checked 2026-11-14 at https://console.groq.com/docs/models; free allowance spending is separate."
+# Other real-model prices deliberately remain null until sourced.
+

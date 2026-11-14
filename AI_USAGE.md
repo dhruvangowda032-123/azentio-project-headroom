@@ -15,5 +15,19 @@ Design decisions owned by this implementation:
 - Fake/rules providers and explicit replay fixtures for offline review; live model results will only be claimed if actually measured.
 - No actual API keys or existing-project source code are included.
 
-AI mistakes, checks, and corrections will be recorded below as validation proceeds. The candidate should independently review this file, the generated corpus/labels, and every module before interview or submission; an AI-authored test run is not a claim of candidate review.
+## Errors caught and corrected
+
+- The first CLI definition made `providers` positional, but the assignment requires `--providers`. A real command invocation caught this; it was changed to an explicit Typer option and an end-to-end CLI regression test was added.
+- Initial recordings keyed identical agreement-content prompts to the same response file. Measuring fake latency exposed a replay timing mismatch. Adding stable agreement identity to the prompt made recording identities distinct; replay tests now assert original timing and metrics.
+- Initial request limits checked only Content-Length. Code review identified chunked requests as a bypass. A bounded ASGI body reader now limits actual bytes and tests cover both forms.
+- Initial repair failures did not count failed calls or elapsed time. Review added failure usage and repair-attempt accounting, with explicit tests.
+- The code initially reported zero fake/rules latency. This was corrected to measured local rule-processing latency and documented separately from model inference or replay speed.
+
+## Verification and limitations
+
+The extraction, API/CLI, dataset, metric, compliance, provider-error, and audit tests are run with sockets disabled. Real network access is only used for dependency installation, documentation research, Docker base/dependency downloads, and explicit localhost smoke tests. Real Groq calls are not claimed without a replacement key and successful measured responses. The disclosed chat key was not reused.
+
+The existing `echo-sage` project was inspected only for high-level folder/dependency patterns; no source was copied. Generated corpus labels derive from an independent structured specification. Automated checks and AI design spot-checks are documented, but independent candidate manual review remains necessary.
+
+All work remains local at the user's request; no GitHub repository, hosted PR, push, or email submission is claimed. The candidate should independently review this file, the generated corpus/labels, and every module before interview or submission; an AI-authored test run is not a claim of candidate review.
 

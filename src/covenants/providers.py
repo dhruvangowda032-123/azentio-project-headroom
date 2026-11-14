@@ -17,6 +17,10 @@ from covenants.schemas import ExtractionDraft, Usage
 class ProviderError(RuntimeError):
     """Sanitized, actionable provider failure. Never includes credentials or raw request headers."""
 
+    def __init__(self, message: str, usage: Usage | None = None):
+        super().__init__(message)
+        self.usage = usage
+
 
 class LLMProvider(Protocol):
     name: str
@@ -32,6 +36,7 @@ class FakeProvider:
     model = "synthetic-rules-v1"
 
     def generate(self, prompt: str, target_schema: type[BaseModel]) -> tuple[BaseModel, Usage]:
+        started = time.perf_counter()
         request = json.loads(prompt)
         records = []
         for clause in request["clauses"]:
@@ -65,7 +70,8 @@ class FakeProvider:
                                         test_frequency="quarterly", effective_from=dates.group(1), effective_to=dates.group(2),
                                         clause_id=clause["clause_id"], quote=clause["text"].strip(), confidence=0.92,
                                         supersedes_clause_id=None))
-        return target_schema.model_validate({"covenants": records}), Usage(calls=1)
+        response = target_schema.model_validate({"covenants": records})
+        return response, Usage(calls=1, latency_ms=(time.perf_counter() - started) * 1000)
 
 
 class RulesProvider(FakeProvider):
@@ -125,6 +131,7 @@ class GroqProvider:
                 "response_format": {"type": "json_schema", "json_schema": {
                     "name": "extraction", "strict": True, "schema": strict_json_schema(target_schema.model_json_schema())}},
                 "max_completion_tokens": 8192}
+        attempt = 0
         try:
             with httpx.Client(timeout=httpx.Timeout(60, connect=10), transport=self._transport,
                               follow_redirects=False) as client:
@@ -148,11 +155,17 @@ class GroqProvider:
                 tokens = result.get("usage", {})
                 return parsed, Usage(input_tokens=tokens.get("prompt_tokens", 0),
                                      output_tokens=tokens.get("completion_tokens", 0),
-                                     latency_ms=(time.perf_counter() - started) * 1000, calls=1)
-        except ProviderError:
+                                     latency_ms=(time.perf_counter() - started) * 1000,
+                                     calls=attempt + 1, failed_calls=attempt)
+        except ProviderError as error:
+            if error.usage is None:
+                error.usage = Usage(latency_ms=(time.perf_counter() - started) * 1000,
+                                    calls=attempt + 1, failed_calls=attempt + 1)
             raise
         except (httpx.HTTPError, ValidationError, KeyError, ValueError, TypeError) as exc:
-            raise ProviderError(f"Groq transport or response validation failed ({type(exc).__name__})") from None
+            raise ProviderError(f"Groq transport or response validation failed ({type(exc).__name__})",
+                                Usage(latency_ms=(time.perf_counter() - started) * 1000,
+                                      calls=attempt + 1, failed_calls=attempt + 1)) from None
 
 
 class ReplayProvider:

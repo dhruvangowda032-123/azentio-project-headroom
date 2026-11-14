@@ -1,0 +1,37 @@
+services:
+  api:
+    build:
+      context: .
+      target: base
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      HEADROOM_PROVIDER: ${HEADROOM_PROVIDER:-fake}
+      HEADROOM_MODEL: ${HEADROOM_MODEL:-openai/gpt-oss-20b}
+      HEADROOM_API_KEY: ${HEADROOM_API_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      HEADROOM_DATA_DIR: /app/runtime
+    volumes:
+      - headroom-data:/app/runtime
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    init: true
+  test:
+    profiles: ["test"]
+    build:
+      context: .
+      target: test
+    network_mode: none
+    environment:
+      GROQ_API_KEY: ""
+      HEADROOM_PROVIDER: fake
+      HEADROOM_DATA_DIR: /tmp/headroom
+
+volumes:
+  headroom-data:
+
