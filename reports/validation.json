@@ -1,0 +1,29 @@
+{
+  "validation_date": "2026-11-14",
+  "scope": "Local assignment acceptance; synthetic data and deterministic providers",
+  "python": "3.12",
+  "local_pytest": {"passed": 110, "failed": 0, "network_sockets": "disabled"},
+  "linux_container_pytest": {"passed": 110, "failed": 0, "network": "none"},
+  "dependency_check": "pip check: no broken requirements",
+  "compose_config": "valid",
+  "docker_build": {"api": "passed", "test": "passed"},
+  "fresh_container_http": {
+    "agreements": 6,
+    "extracted_covenants": 39,
+    "quarterly_checks": 8,
+    "expected_breaches": 1,
+    "observed_seeded_breach": "loan_01 at 2026-09-30: leverage 4.5 > limit 3.5",
+    "missing_financials": "NEEDS_REVIEW",
+    "unknown_agreement": 404,
+    "invalid_agreement": 422,
+    "stored_agreements": 6,
+    "audit_entries": 9,
+    "audit_entry_explanation": "Eight complete quarterly checks plus one missing-input review check"
+  },
+  "replay": "Committed fake/rules metrics, tokens, and recorded latency reproduce exactly offline",
+  "secret_pattern_scan": "No Groq/OpenAI secret-key patterns found in application, tests, datasets, recordings, reports, or scripts",
+  "upstream_warning": "Starlette TestClient deprecates HTTPX in favor of HTTPX2; tests currently pass with pinned dependencies",
+  "live_groq": "Not run: no replacement key configured; transport/response errors tested with HTTP mocks",
+  "production_limit": "No unrestricted production-readiness claim; real-model evaluation, independent labels, and deployment hardening remain",
+  "external_actions": "No remote repository, hosted PR, push, registry upload, deployment, or email submission"
+}

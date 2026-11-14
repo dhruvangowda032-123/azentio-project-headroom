@@ -130,7 +130,9 @@ class GroqProvider:
                     {"role": "user", "content": prompt}],
                 "response_format": {"type": "json_schema", "json_schema": {
                     "name": "extraction", "strict": True, "schema": strict_json_schema(target_schema.model_json_schema())}},
-                "max_completion_tokens": 8192}
+                "max_completion_tokens": 4096}
+        if self.model.startswith("openai/gpt-oss-"):
+            body["reasoning_effort"] = "low"
         attempt = 0
         try:
             with httpx.Client(timeout=httpx.Timeout(60, connect=10), transport=self._transport,

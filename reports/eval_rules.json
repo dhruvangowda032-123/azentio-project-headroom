@@ -1,0 +1,48 @@
+{
+  "agreements": 6,
+  "calls": 6,
+  "failed_calls": 0,
+  "input_tokens": 0,
+  "latency_source": "sum of provider-call elapsed times per agreement; replay preserves recorded timings; fake/rules timings measure local rule processing, not model inference",
+  "max_latency_ms": 0.46691599709447473,
+  "mean_latency_ms": 0.11733333182443555,
+  "metrics": {
+    "citation_accuracy": 1.0,
+    "distractor_false_positives": 0,
+    "f1": 0.8888888888888888,
+    "gold": 39,
+    "matched": 33,
+    "per_field_accuracy": {
+      "effective_from": 1.0,
+      "effective_to": 0.9696969696969697,
+      "operator": 1.0,
+      "threshold": 1.0,
+      "unit": 1.0
+    },
+    "precision": 0.9696969696969697,
+    "predicted": 33,
+    "recall": 0.8205128205128205,
+    "top_error_types": [
+      {
+        "count": 4,
+        "type": "missed_step_down"
+      },
+      {
+        "count": 1,
+        "type": "effective_to"
+      },
+      {
+        "count": 1,
+        "type": "missed_amendment_override"
+      }
+    ],
+    "true_positives": 32,
+    "unverified_rate": 0.0
+  },
+  "model": "simple-regex-v1",
+  "output_tokens": 0,
+  "pricing_note": "Regex baseline, no model tokens; excludes compute/hosting costs.",
+  "provider": "rules",
+  "repair_attempts": 0,
+  "usd_per_100_agreements": 0.0
+}

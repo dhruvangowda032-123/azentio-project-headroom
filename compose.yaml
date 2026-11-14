@@ -11,6 +11,8 @@ services:
       HEADROOM_API_KEY: ${HEADROOM_API_KEY:-}
       GROQ_API_KEY: ${GROQ_API_KEY:-}
       HEADROOM_DATA_DIR: /app/runtime
+      HEADROOM_NEAR_BREACH_PERCENT: ${HEADROOM_NEAR_BREACH_PERCENT:-10}
+      HEADROOM_CONFIDENCE_CUTOFF: ${HEADROOM_CONFIDENCE_CUTOFF:-0.8}
     volumes:
       - headroom-data:/app/runtime
     read_only: true

@@ -1,0 +1,5 @@
+{
+  "provider": "fake",
+  "model": "synthetic-rules-v1",
+  "kind": "deterministic-baseline"
+}

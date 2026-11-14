@@ -1,0 +1,5 @@
+{
+  "provider": "rules",
+  "model": "simple-regex-v1",
+  "kind": "deterministic-baseline"
+}

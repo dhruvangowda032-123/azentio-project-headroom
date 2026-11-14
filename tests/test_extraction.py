@@ -85,6 +85,12 @@ def test_verifier_whitespace_only_normalization(extraction):
     assert "does not exist" in verify(c, clauses)
 
 
+def test_operator_contradiction_is_not_verified(extraction):
+    covenant = extraction.covenants[0].model_copy(deep=True)
+    covenant.operator = "GTE"
+    assert "operator contradicts" in verify(covenant, {c.clause_id: c for c in extraction.clauses})
+
+
 class BrokenEvidence(FakeProvider):
     def __init__(self, mode, repair="bad"):
         self.calls = 0

@@ -26,6 +26,8 @@ The virtual environment, `.env`, runtime database, and `out/` are ignored. No re
 
 A complete sample extraction is saved in [reports/sample_extraction.json](reports/sample_extraction.json); the verified record quotes its original numbered clause and includes all required model fields and extraction metadata.
 
+Validation: **110 tests pass locally and in a Linux container with networking disabled**. A fresh-container HTTP run checked six agreements, 39 extractions, eight financial periods, and nine audit entries (including one missing-input check). See [reports/validation.json](reports/validation.json) and [reports/http_smoke.json](reports/http_smoke.json). One upstream Starlette TestClient deprecation warning remains with the pinned HTTPX setup; it does not fail tests.
+
 ## Architecture
 
 ```text
@@ -48,7 +50,7 @@ The parser recognizes headings such as `22.2 Leverage` (including Markdown), rej
 
 The versioned prompt requests quarterly financial maintenance covenants, excludes numeric distractors, and requires one record per schedule step. A Pydantic schema enforces enum/operator/unit/date constraints. Groq uses strict structured output; local validation remains authoritative because valid JSON is not necessarily correct interpretation. Missing facts must not be guessed. The fake implements the documented synthetic grammar only and is not an LLM.
 
-Verification looks up the cited clause, checks the verbatim quote after whitespace normalization (case and punctuation still matter), and parses complete numeric tokens with regex and Decimal. `4`, `4.0`, and `4.00` compare numerically; `14.0` does not match `4`. Commas in amounts are supported. Written-out numbers, scaling, and semantic interpretation are beyond this lexical verifier and need review or additional support.
+Verification looks up the cited clause, checks the verbatim quote after whitespace normalization (case and punctuation still matter), and parses complete numeric tokens with regex and Decimal. `4`, `4.0`, and `4.00` compare numerically; `14.0` does not match `4`. Commas in amounts are supported. A limited operator guard also catches contradictions with explicit "shall not exceed" / "shall not be less than" wording. Written-out numbers, scaling, and general semantic interpretation are beyond this verifier and need review or additional support.
 
 Each failed citation gets exactly one correction request containing the error and candidate. A second failure, wrong response count, or repair-provider failure retains an unverified record with a reason. Initial provider/schema failures abort ingestion visibly instead of returning empty success. Empty extraction never authorizes a compliance pass. Output carries provider, model, prompt version, and prompt hash.
 

@@ -22,10 +22,13 @@ Design decisions owned by this implementation:
 - Initial request limits checked only Content-Length. Code review identified chunked requests as a bypass. A bounded ASGI body reader now limits actual bytes and tests cover both forms.
 - Initial repair failures did not count failed calls or elapsed time. Review added failure usage and repair-attempt accounting, with explicit tests.
 - The code initially reported zero fake/rules latency. This was corrected to measured local rule-processing latency and documented separately from model inference or replay speed.
+- An operator-consistency guard was added for explicit minimum/maximum phrasing. A targeted test confirms an exact quote with the wrong operator is not verified.
 
 ## Verification and limitations
 
 The extraction, API/CLI, dataset, metric, compliance, provider-error, and audit tests are run with sockets disabled. Real network access is only used for dependency installation, documentation research, Docker base/dependency downloads, and explicit localhost smoke tests. Real Groq calls are not claimed without a replacement key and successful measured responses. The disclosed chat key was not reused.
+
+Final recorded validation: 110 passing tests on the host and in a network-disabled Linux container; fresh-storage HTTP checks for six agreements, 39 covenants, eight reporting periods, and nine audit entries. Full details are in `reports/validation.json`. An upstream Starlette TestClient deprecation warning remains documented.
 
 The existing `echo-sage` project was inspected only for high-level folder/dependency patterns; no source was copied. Generated corpus labels derive from an independent structured specification. Automated checks and AI design spot-checks are documented, but independent candidate manual review remains necessary.
 

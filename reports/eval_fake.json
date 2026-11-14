@@ -1,0 +1,35 @@
+{
+  "agreements": 6,
+  "calls": 6,
+  "failed_calls": 0,
+  "input_tokens": 0,
+  "latency_source": "sum of provider-call elapsed times per agreement; replay preserves recorded timings; fake/rules timings measure local rule processing, not model inference",
+  "max_latency_ms": 0.03183299850206822,
+  "mean_latency_ms": 0.029249833460198715,
+  "metrics": {
+    "citation_accuracy": 1.0,
+    "distractor_false_positives": 0,
+    "f1": 1.0,
+    "gold": 39,
+    "matched": 39,
+    "per_field_accuracy": {
+      "effective_from": 1.0,
+      "effective_to": 1.0,
+      "operator": 1.0,
+      "threshold": 1.0,
+      "unit": 1.0
+    },
+    "precision": 1.0,
+    "predicted": 39,
+    "recall": 1.0,
+    "top_error_types": [],
+    "true_positives": 39,
+    "unverified_rate": 0.0
+  },
+  "model": "synthetic-rules-v1",
+  "output_tokens": 0,
+  "pricing_note": "Deterministic fake, no model tokens; excludes compute/hosting costs.",
+  "provider": "fake",
+  "repair_attempts": 0,
+  "usd_per_100_agreements": 0.0
+}
