@@ -247,3 +247,57 @@ Before production: independently labelled holdouts and calibrated uncertainty; c
 
 Initial implementation was performed locally and the candidate subsequently published the repository on GitHub. Use a feature branch and a GitHub pull request for subsequent changes, and verify its checks before merging. Email submission and compliance with the coordinator's timing rules remain the candidate's responsibility. See `AI_USAGE.md`. Never claim a retrospective submission or fabricated human review.
 
+
+
+
+
+Imagine a bank gives a company a loan.
+
+**1. Read the loan agreement**
+
+The agreement says:
+
+> **Clause 22.1:** “The company’s debt must not exceed **3.5 times its earnings**.”
+
+**2. Extract the condition**
+
+Our program reads this and saves:
+
+- Calculation: debt ÷ earnings
+- Maximum allowed: **3.5**
+- Source: **clause 22.1**, with the original sentence
+
+The current demo uses Python text patterns and regex for this step.
+
+**3. Check against the original agreement**
+
+The program checks:
+
+- Is the saved sentence actually in clause 22.1?
+- Does it contain the saved limit, **3.5**?
+
+If the check fails, it tries one correction. Still incorrect → a person must review it.
+
+**4. Check extraction accuracy separately**
+
+Our prepared correct answer also says **maximum 3.5**. Comparing them tells us whether extraction was correct. These prepared answers are the **golden set**.
+
+**5. Receive the company’s quarterly figures**
+
+- Debt: **₹450 crore**
+- Earnings: **₹100 crore**
+
+**6. Calculate and compare**
+
+Python calculates:
+
+**450 ÷ 100 = 4.5**
+
+The company’s ratio is **4.5**, but the agreement allows only **3.5**.
+
+**7. Return the final result**
+
+> **BREACH — the company has crossed its loan limit.**
+
+The result includes **4.5**, the allowed **3.5**, clause **22.1**, and the supporting sentence. The application also saves a record of the check.
+
