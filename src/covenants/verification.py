@@ -27,5 +27,13 @@ def verify(covenant: CovenantDraft, clauses: dict[str, Clause]) -> str | None:
             continue
     if covenant.threshold not in values:
         return "threshold value does not appear in quote"
+    # A limited, explicit consistency check, not a semantic proof of the contract.
+    lower = quote.lower()
+    maximum = "shall not exceed" in lower
+    minimum = "shall not be less than" in lower
+    if maximum != minimum:
+        expected = "LTE" if maximum else "GTE"
+        if covenant.operator != expected:
+            return "operator contradicts explicit comparison wording in quote"
     return None
 

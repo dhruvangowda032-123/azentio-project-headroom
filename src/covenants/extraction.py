@@ -2,11 +2,12 @@
 
 import hashlib
 import json
+import time
 from datetime import timedelta
 
 from covenants.parser import parse_clauses
 from covenants.providers import LLMProvider, ProviderError
-from covenants.schemas import Covenant, ExtractionDraft, ExtractionMeta, ExtractionResult
+from covenants.schemas import Covenant, ExtractionDraft, ExtractionMeta, ExtractionResult, Usage
 from covenants.verification import verify
 
 PROMPT_VERSION = "headroom-extract-v1"
@@ -28,16 +29,19 @@ def extract(text: str, provider: LLMProvider, max_chars: int = 200_000) -> Extra
     clause_map = {c.clause_id: c for c in clauses}
     agreement_id = hashlib.sha256(text.encode()).hexdigest()[:24]
     # All clauses retained for recall and cross-reference context. Batch once for this small corpus.
-    request = {"instructions": INSTRUCTIONS, "prompt_version": PROMPT_VERSION,
+    request = {"agreement_id": agreement_id, "instructions": INSTRUCTIONS, "prompt_version": PROMPT_VERSION,
                "clauses": [{"clause_id": c.clause_id, "heading": c.heading, "text": c.text} for c in clauses]}
     prompt = json.dumps(request, sort_keys=True)
     draft, usage = provider.generate(prompt, ExtractionDraft)
     covenants = []
     issues = []
+    repair_attempts = 0
     for index, initial in enumerate(draft.covenants):
         record = initial
         reason = verify(record, clause_map)
         if reason:
+            repair_attempts += 1
+            repair_started = time.perf_counter()
             repair_request = {**request, "repair": {"error": reason,
                                "candidate": record.model_dump(mode="json"),
                                "instruction": "Return exactly one corrected version of this candidate only."}}
@@ -49,7 +53,9 @@ def extract(text: str, provider: LLMProvider, max_chars: int = 200_000) -> Extra
                     reason = verify(record, clause_map)
                 else:
                     reason = f"repair must return exactly one record; original error: {reason}"
-            except ProviderError:
+            except ProviderError as error:
+                usage.add(error.usage or Usage(calls=1, failed_calls=1,
+                                              latency_ms=(time.perf_counter() - repair_started) * 1000))
                 reason = f"repair provider failed; original error: {reason}"
         covenants.append(Covenant(**record.model_dump(), covenant_id=f"{agreement_id}-{index + 1:03}",
                                   status="unverified" if reason else "verified", status_reason=reason or "quote and threshold verified"))
@@ -75,5 +81,5 @@ def extract(text: str, provider: LLMProvider, max_chars: int = 200_000) -> Extra
     return ExtractionResult(agreement_id=agreement_id, clauses=clauses, covenants=covenants,
                             extraction_meta=ExtractionMeta(provider=provider.name, model=provider.model,
                                 prompt_version=PROMPT_VERSION, prompt_hash=hashlib.sha256(prompt.encode()).hexdigest()),
-                            usage=usage, issues=issues)
+                            usage=usage, issues=issues, repair_attempts=repair_attempts)
 

@@ -1,0 +1,146 @@
+{
+  "agreements": 6,
+  "covenants": 39,
+  "quarterly_checks": [
+    {
+      "borrower": "loan_01",
+      "period": "2026-03-31",
+      "status": "PASS"
+    },
+    {
+      "borrower": "loan_01",
+      "period": "2026-06-30",
+      "status": "PASS"
+    },
+    {
+      "borrower": "loan_01",
+      "period": "2026-09-30",
+      "status": "BREACH"
+    },
+    {
+      "borrower": "loan_01",
+      "period": "2026-12-31",
+      "status": "PASS"
+    },
+    {
+      "borrower": "loan_03",
+      "period": "2026-03-31",
+      "status": "PASS"
+    },
+    {
+      "borrower": "loan_03",
+      "period": "2026-06-30",
+      "status": "PASS"
+    },
+    {
+      "borrower": "loan_03",
+      "period": "2026-09-30",
+      "status": "PASS"
+    },
+    {
+      "borrower": "loan_03",
+      "period": "2026-12-31",
+      "status": "PASS"
+    }
+  ],
+  "missing_inputs": "NEEDS_REVIEW",
+  "not_found": 404,
+  "invalid_input": 422,
+  "breach_example": {
+    "request": {
+      "period_end": "2026-09-30",
+      "financials": {
+        "net_debt": 450000000,
+        "ltm_ebitda": 100000000,
+        "interest_expense": 20000000,
+        "cash_available_for_debt_service": 60000000,
+        "debt_service": 40000000,
+        "tangible_net_worth": 80000000,
+        "current_assets": 200000000,
+        "current_liabilities": 100000000,
+        "capex": 10000000
+      }
+    },
+    "response": {
+      "agreement_id": "151a67d054c4af11d594f19a",
+      "period_end": "2026-09-30",
+      "overall_status": "BREACH",
+      "input_hash": "e6f2747a53720c7fa14b64a869aa2084258158f9bb9df7e8cdaefcebad26568e",
+      "results": [
+        {
+          "covenant_id": "151a67d054c4af11d594f19a-002",
+          "type": "LEVERAGE",
+          "computed_value": 4.5,
+          "applicable_threshold": 3.5,
+          "status": "BREACH",
+          "headroom_percent": -28.571428571428573,
+          "clause_id": "22.1",
+          "quote": "From 2026-07-01 through 2026-12-31, the Borrower shall ensure Net Debt / LTM EBITDA shall not exceed 3.5 ratio.",
+          "reason": "actual violates contractual limit"
+        },
+        {
+          "covenant_id": "151a67d054c4af11d594f19a-003",
+          "type": "INTEREST_COVER",
+          "computed_value": 5.0,
+          "applicable_threshold": 3.0,
+          "status": "PASS",
+          "headroom_percent": 66.66666666666667,
+          "clause_id": "22.2",
+          "quote": "From 2026-01-01 through 2026-12-31, the Borrower shall ensure LTM EBITDA / interest expense shall not be less than 3.0 ratio.",
+          "reason": "within limit with sufficient headroom"
+        },
+        {
+          "covenant_id": "151a67d054c4af11d594f19a-004",
+          "type": "DSCR",
+          "computed_value": 1.5,
+          "applicable_threshold": 1.2,
+          "status": "PASS",
+          "headroom_percent": 25.0,
+          "clause_id": "22.3",
+          "quote": "From 2026-01-01 through 2026-12-31, the Borrower shall ensure cash available for debt service / debt service shall not be less than 1.2 ratio.",
+          "reason": "within limit with sufficient headroom"
+        },
+        {
+          "covenant_id": "151a67d054c4af11d594f19a-005",
+          "type": "MIN_NET_WORTH",
+          "computed_value": 80000000.0,
+          "applicable_threshold": 50000000.0,
+          "status": "PASS",
+          "headroom_percent": 60.0,
+          "clause_id": "22.4",
+          "quote": "From 2026-01-01 through 2026-12-31, the Borrower shall ensure tangible net worth shall not be less than 50000000 currency.",
+          "reason": "within limit with sufficient headroom"
+        },
+        {
+          "covenant_id": "151a67d054c4af11d594f19a-006",
+          "type": "CURRENT_RATIO",
+          "computed_value": 2.0,
+          "applicable_threshold": 1.5,
+          "status": "PASS",
+          "headroom_percent": 33.333333333333336,
+          "clause_id": "22.5",
+          "quote": "From 2026-01-01 through 2026-12-31, the Borrower shall ensure current assets / current liabilities shall not be less than 1.5 ratio.",
+          "reason": "within limit with sufficient headroom"
+        },
+        {
+          "covenant_id": "151a67d054c4af11d594f19a-007",
+          "type": "MAX_CAPEX",
+          "computed_value": 10000000.0,
+          "applicable_threshold": 20000000.0,
+          "status": "PASS",
+          "headroom_percent": 50.0,
+          "clause_id": "22.6",
+          "quote": "From 2026-01-01 through 2026-12-31, the Borrower shall ensure quarterly capex shall not exceed 20000000 currency.",
+          "reason": "within limit with sufficient headroom"
+        }
+      ],
+      "extraction_meta": {
+        "provider": "fake",
+        "model": "synthetic-rules-v1",
+        "prompt_version": "headroom-extract-v1",
+        "prompt_hash": "db7c60d5ebb9763ab9030224efcc6446ceb6f92ecb7935b5691ee4084c9e2547"
+      },
+      "issues": []
+    }
+  }
+}

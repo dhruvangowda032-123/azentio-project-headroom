@@ -76,12 +76,14 @@ class Usage(Record):
     output_tokens: int = Field(default=0, ge=0)
     latency_ms: float = Field(default=0, ge=0)
     calls: int = Field(default=0, ge=0)
+    failed_calls: int = Field(default=0, ge=0)
 
     def add(self, other: "Usage") -> None:
         self.input_tokens += other.input_tokens
         self.output_tokens += other.output_tokens
         self.latency_ms += other.latency_ms
         self.calls += other.calls
+        self.failed_calls += other.failed_calls
 
 
 class ExtractionResult(Record):
@@ -91,6 +93,7 @@ class ExtractionResult(Record):
     extraction_meta: ExtractionMeta
     usage: Usage
     issues: list[str] = Field(default_factory=list)
+    repair_attempts: int = Field(default=0, ge=0)
 
 
 class AgreementInput(Record):

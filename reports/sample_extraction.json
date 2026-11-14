@@ -1,0 +1,190 @@
+{
+  "agreement_id": "151a67d054c4af11d594f19a",
+  "clauses": [
+    {
+      "clause_id": "22.1",
+      "heading": "Leverage",
+      "text": "22.1 Leverage\nTest frequency: quarterly, at quarter end.\nFrom 2026-01-01 through 2026-06-30, the Borrower shall ensure Net Debt / LTM EBITDA shall not exceed 4.0 ratio.\nFrom 2026-07-01 through 2026-12-31, the Borrower shall ensure Net Debt / LTM EBITDA shall not exceed 3.5 ratio.\n\n",
+      "start": 340,
+      "end": 622
+    },
+    {
+      "clause_id": "22.2",
+      "heading": "Interest cover",
+      "text": "22.2 Interest cover\nTest frequency: quarterly, at quarter end.\nFrom 2026-01-01 through 2026-12-31, the Borrower shall ensure LTM EBITDA / interest expense shall not be less than 3.0 ratio.\n\n",
+      "start": 622,
+      "end": 812
+    },
+    {
+      "clause_id": "22.3",
+      "heading": "Debt service coverage",
+      "text": "22.3 Debt service coverage\nTest frequency: quarterly, at quarter end.\nFrom 2026-01-01 through 2026-12-31, the Borrower shall ensure cash available for debt service / debt service shall not be less than 1.2 ratio.\n\n",
+      "start": 812,
+      "end": 1026
+    },
+    {
+      "clause_id": "22.4",
+      "heading": "Minimum net worth",
+      "text": "22.4 Minimum net worth\nTest frequency: quarterly, at quarter end.\nFrom 2026-01-01 through 2026-12-31, the Borrower shall ensure tangible net worth shall not be less than 50000000 currency.\n\n",
+      "start": 1026,
+      "end": 1216
+    },
+    {
+      "clause_id": "22.5",
+      "heading": "Current ratio",
+      "text": "22.5 Current ratio\nTest frequency: quarterly, at quarter end.\nFrom 2026-01-01 through 2026-12-31, the Borrower shall ensure current assets / current liabilities shall not be less than 1.5 ratio.\n\n",
+      "start": 1216,
+      "end": 1412
+    },
+    {
+      "clause_id": "22.6",
+      "heading": "Capital expenditure",
+      "text": "22.6 Capital expenditure\nTest frequency: quarterly, at quarter end.\nFrom 2026-01-01 through 2026-12-31, the Borrower shall ensure quarterly capex shall not exceed 20000000 currency.\n\n",
+      "start": 1412,
+      "end": 1595
+    },
+    {
+      "clause_id": "30.1",
+      "heading": "Interest margin",
+      "text": "30.1 Interest margin\nThe applicable interest margin is 2.0 percent per annum.\n\n",
+      "start": 1595,
+      "end": 1674
+    },
+    {
+      "clause_id": "30.2",
+      "heading": "Commitment fee",
+      "text": "30.2 Commitment fee\nThe commitment fee is 0.5 percent on the undrawn amount.\n",
+      "start": 1674,
+      "end": 1751
+    }
+  ],
+  "covenants": [
+    {
+      "type": "LEVERAGE",
+      "operator": "LTE",
+      "threshold": 4.0,
+      "unit": "ratio",
+      "test_frequency": "quarterly",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-06-30",
+      "clause_id": "22.1",
+      "quote": "From 2026-01-01 through 2026-06-30, the Borrower shall ensure Net Debt / LTM EBITDA shall not exceed 4.0 ratio.",
+      "confidence": 0.97,
+      "supersedes_clause_id": null,
+      "covenant_id": "151a67d054c4af11d594f19a-001",
+      "status": "verified",
+      "status_reason": "quote and threshold verified"
+    },
+    {
+      "type": "LEVERAGE",
+      "operator": "LTE",
+      "threshold": 3.5,
+      "unit": "ratio",
+      "test_frequency": "quarterly",
+      "effective_from": "2026-07-01",
+      "effective_to": "2026-12-31",
+      "clause_id": "22.1",
+      "quote": "From 2026-07-01 through 2026-12-31, the Borrower shall ensure Net Debt / LTM EBITDA shall not exceed 3.5 ratio.",
+      "confidence": 0.97,
+      "supersedes_clause_id": null,
+      "covenant_id": "151a67d054c4af11d594f19a-002",
+      "status": "verified",
+      "status_reason": "quote and threshold verified"
+    },
+    {
+      "type": "INTEREST_COVER",
+      "operator": "GTE",
+      "threshold": 3.0,
+      "unit": "ratio",
+      "test_frequency": "quarterly",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "clause_id": "22.2",
+      "quote": "From 2026-01-01 through 2026-12-31, the Borrower shall ensure LTM EBITDA / interest expense shall not be less than 3.0 ratio.",
+      "confidence": 0.97,
+      "supersedes_clause_id": null,
+      "covenant_id": "151a67d054c4af11d594f19a-003",
+      "status": "verified",
+      "status_reason": "quote and threshold verified"
+    },
+    {
+      "type": "DSCR",
+      "operator": "GTE",
+      "threshold": 1.2,
+      "unit": "ratio",
+      "test_frequency": "quarterly",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "clause_id": "22.3",
+      "quote": "From 2026-01-01 through 2026-12-31, the Borrower shall ensure cash available for debt service / debt service shall not be less than 1.2 ratio.",
+      "confidence": 0.97,
+      "supersedes_clause_id": null,
+      "covenant_id": "151a67d054c4af11d594f19a-004",
+      "status": "verified",
+      "status_reason": "quote and threshold verified"
+    },
+    {
+      "type": "MIN_NET_WORTH",
+      "operator": "GTE",
+      "threshold": 50000000.0,
+      "unit": "currency",
+      "test_frequency": "quarterly",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "clause_id": "22.4",
+      "quote": "From 2026-01-01 through 2026-12-31, the Borrower shall ensure tangible net worth shall not be less than 50000000 currency.",
+      "confidence": 0.97,
+      "supersedes_clause_id": null,
+      "covenant_id": "151a67d054c4af11d594f19a-005",
+      "status": "verified",
+      "status_reason": "quote and threshold verified"
+    },
+    {
+      "type": "CURRENT_RATIO",
+      "operator": "GTE",
+      "threshold": 1.5,
+      "unit": "ratio",
+      "test_frequency": "quarterly",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "clause_id": "22.5",
+      "quote": "From 2026-01-01 through 2026-12-31, the Borrower shall ensure current assets / current liabilities shall not be less than 1.5 ratio.",
+      "confidence": 0.97,
+      "supersedes_clause_id": null,
+      "covenant_id": "151a67d054c4af11d594f19a-006",
+      "status": "verified",
+      "status_reason": "quote and threshold verified"
+    },
+    {
+      "type": "MAX_CAPEX",
+      "operator": "LTE",
+      "threshold": 20000000.0,
+      "unit": "currency",
+      "test_frequency": "quarterly",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "clause_id": "22.6",
+      "quote": "From 2026-01-01 through 2026-12-31, the Borrower shall ensure quarterly capex shall not exceed 20000000 currency.",
+      "confidence": 0.97,
+      "supersedes_clause_id": null,
+      "covenant_id": "151a67d054c4af11d594f19a-007",
+      "status": "verified",
+      "status_reason": "quote and threshold verified"
+    }
+  ],
+  "extraction_meta": {
+    "provider": "fake",
+    "model": "synthetic-rules-v1",
+    "prompt_version": "headroom-extract-v1",
+    "prompt_hash": "db7c60d5ebb9763ab9030224efcc6446ceb6f92ecb7935b5691ee4084c9e2547"
+  },
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "latency_ms": 0.46712500625289977,
+    "calls": 1,
+    "failed_calls": 0
+  },
+  "issues": [],
+  "repair_attempts": 0
+}

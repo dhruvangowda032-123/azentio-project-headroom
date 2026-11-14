@@ -1,0 +1,58 @@
+[
+  {
+    "period_end": "2026-03-31",
+    "financials": {
+      "net_debt": 250000000,
+      "ltm_ebitda": 100000000,
+      "interest_expense": 20000000,
+      "cash_available_for_debt_service": 60000000,
+      "debt_service": 40000000,
+      "tangible_net_worth": 80000000,
+      "current_assets": 200000000,
+      "current_liabilities": 100000000,
+      "capex": 10000000
+    }
+  },
+  {
+    "period_end": "2026-06-30",
+    "financials": {
+      "net_debt": 250000000,
+      "ltm_ebitda": 100000000,
+      "interest_expense": 20000000,
+      "cash_available_for_debt_service": 60000000,
+      "debt_service": 40000000,
+      "tangible_net_worth": 80000000,
+      "current_assets": 200000000,
+      "current_liabilities": 100000000,
+      "capex": 10000000
+    }
+  },
+  {
+    "period_end": "2026-09-30",
+    "financials": {
+      "net_debt": 450000000,
+      "ltm_ebitda": 100000000,
+      "interest_expense": 20000000,
+      "cash_available_for_debt_service": 60000000,
+      "debt_service": 40000000,
+      "tangible_net_worth": 80000000,
+      "current_assets": 200000000,
+      "current_liabilities": 100000000,
+      "capex": 10000000
+    }
+  },
+  {
+    "period_end": "2026-12-31",
+    "financials": {
+      "net_debt": 250000000,
+      "ltm_ebitda": 100000000,
+      "interest_expense": 20000000,
+      "cash_available_for_debt_service": 60000000,
+      "debt_service": 40000000,
+      "tangible_net_worth": 80000000,
+      "current_assets": 200000000,
+      "current_liabilities": 100000000,
+      "capex": 10000000
+    }
+  }
+]
