@@ -1,0 +1,43 @@
+name: Offline assignment checks
+
+on:
+  push:
+    branches: [main, ci/offline-validation]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    env:
+      GROQ_API_KEY: ""
+      HEADROOM_PROVIDER: fake
+      HEADROOM_API_KEY: ""
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements.lock
+      - name: Install pinned dependencies and application
+        run: |
+          python -m pip install -r requirements.lock
+          python -m pip install -e .
+      - name: Check dependency compatibility
+        run: python -m pip check
+      - name: Run all tests with network sockets disabled
+        run: pytest
+      - name: Reproduce committed extraction metrics offline
+        run: python scripts/verify_replay.py

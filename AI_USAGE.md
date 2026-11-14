@@ -32,5 +32,7 @@ Final recorded validation: 110 passing tests on the host and in a network-disabl
 
 The existing `echo-sage` project was inspected only for high-level folder/dependency patterns; no source was copied. Generated corpus labels derive from an independent structured specification. Automated checks and AI design spot-checks are documented, but independent candidate manual review remains necessary.
 
-All work remains local at the user's request; no GitHub repository, hosted PR, push, or email submission is claimed. The candidate should independently review this file, the generated corpus/labels, and every module before interview or submission; an AI-authored test run is not a claim of candidate review.
+Initial implementation remained local at the user's request. The candidate later created the GitHub repository and pushed `main`; the assistant confirmed the remote commit matched. No push, hosted PR creation/merge, or email submission was performed by the assistant. A subsequent local `ci/offline-validation` branch adds genuine automated validation and updates publication notes for the candidate to push and merge through a hosted PR. Its Python 3.11/3.12 matrix is a CI configuration, not a claim that hosted CI has already passed.
+
+The candidate should independently review this file, the generated corpus/labels, and every module before interview or submission; an AI-authored test run is not a claim of candidate review.
 

@@ -2,7 +2,7 @@
 
 Read synthetic corporate loan agreements, extract financial covenants with checked citations, and check quarterly figures using deterministic arithmetic. Failed evidence checks remain visible and uncertain results go to review.
 
-This is an assignment implementation with production-oriented safeguards, not an approved production credit-decision system. Everything is local: no remote repository, push, PR, deployment, or email submission has been performed.
+This is an assignment implementation with production-oriented safeguards, not an approved production credit-decision system. The default application and tests run locally; GitHub publication does not deploy a live application or submit the assignment by email.
 
 ## Quick start
 
@@ -132,6 +132,8 @@ Every check inserts one SQLite audit row: agreement ID, period, canonical input 
 
 ## Guardrails and tests
 
+GitHub Actions runs the offline suite, dependency compatibility check, and exact replay verification on Python 3.11 and 3.12 for pull requests into `main` and configured branch pushes. Installation downloads dependencies; the pytest suite itself blocks network sockets and needs no API secrets. See `.github/workflows/tests.yml`. Hosted CI results must be checked on the actual pull request; local passing tests alone do not prove the hosted workflow passed.
+
 `pytest` disables network sockets and removes API-key environment values. All model-dependent tests use FakeProvider; real-provider transport is tested with in-memory HTTP mocks. Tests cover offsets/duplicate IDs, schemas, quotes/numbers, one repair, both inequalities, denominators, missing inputs, step-downs/amendments, review routing, empty extraction, audits, CLI/API, known metrics, label leakage, replay identity, timeouts, rate limits, and malformed/truncated responses.
 
 Agreement text is untrusted prompt data, not instructions; the model has no execution/browsing tools. This reduces injection impact without guaranteeing correct interpretation. Limits, validated outputs, Decimal arithmetic, parameterized SQLite, immutable extractions, optional `HEADROOM_API_KEY` authentication, bounded retries, and Docker secret exclusions add protection. Default binding is local. `/docs` and schema metadata are public locally; public deployment needs a separate review.
@@ -156,5 +158,5 @@ Implemented: the three core tasks, offline fallback comparison, optional real-pr
 
 Before production: independently labelled holdouts and calibrated uncertainty; contract-specific formulas/currencies; multi-source evidence; explicit document/model/prompt version management; authenticated reviewer approvals; concurrency/rate budgets; organization identity/TLS; backups/migrations/retention; monitoring and load/security tests. SQLite and the intentionally synchronous API satisfy this local assignment; they do not demonstrate enterprise scale.
 
-The user requested local-only work. No public repository, hosted PR, or email submission exists. These assignment submission steps remain for the candidate and must follow the coordinator's timing rules. See `AI_USAGE.md`. Never claim a retrospective submission or fabricated human review.
+Initial implementation was performed locally and the candidate subsequently published the repository on GitHub. Use a feature branch and a GitHub pull request for subsequent changes, and verify its checks before merging. Email submission and compliance with the coordinator's timing rules remain the candidate's responsibility. See `AI_USAGE.md`. Never claim a retrospective submission or fabricated human review.
 
